@@ -1,10 +1,9 @@
 import {
-  type ColumnDef,
   flexRender,
   getCoreRowModel,
   useReactTable,
+  type ColumnDef,
 } from "@tanstack/react-table";
-
 import {
   Table,
   TableBody,
@@ -12,15 +11,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import CreateBook from "../books/createBook";
+} from "../ui/table";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export function DataTable<TData, TValue>({
+export function SummaryTable<TData, TValue>({
   columns,
   data,
 }: DataTableProps<TData, TValue>) {
@@ -32,11 +30,6 @@ export function DataTable<TData, TValue>({
 
   return (
     <>
-      <div className="flex items-center py-4">
-        <div className="ml-auto">
-          <CreateBook />
-        </div>
-      </div>
       {/* table main body section */}
       <div className="rounded-md border">
         <Table>

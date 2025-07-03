@@ -57,12 +57,14 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar } from "../ui/calendar";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 function ActionDialog({ book }) {
   const [dropDown, setDropDown] = useState(false);
   const [dialog1, setDialog1] = useState(false);
   const [dialog3, setDialog3] = useState(false);
-  const [foundBook, setFoundBook] = useState();
+  const [foundBook, setFoundBook] = useState(null);
   const [openPop, setOpenPop] = useState(false);
 
   const { data, isLoading } = useGetBookByIdQuery(book._id);
@@ -70,16 +72,25 @@ function ActionDialog({ book }) {
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookByIdMutation();
   const [borrowBook, { isLoading: isBorrowing }] = useBorrowBookByIdMutation();
 
-  useEffect(() => {
-    if (data && !isLoading) setFoundBook(data.data);
-  }, [isLoading, data]);
-
+  const navigate = useNavigate();
   const form = useForm();
+
+  useEffect(() => {
+    if (data && !isLoading) {
+      setFoundBook(data.data);
+      form.reset(data);
+    }
+  }, [data, isLoading, form]);
 
   const onSubmit = async (data) => {
     try {
-      const response = await updateBook({ id: book._id, ...data });
-      console.log(response);
+      const res = await updateBook({ id: book._id, ...data });
+      console.log(res);
+      if (res.error) {
+        toast.error("Failed to update book");
+      } else {
+        toast.success("Book updated succesfully");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -93,6 +104,11 @@ function ActionDialog({ book }) {
     try {
       const res = await deleteBook(book._id);
       console.log(res);
+      if (res.data.success) {
+        toast.success("Book deleted successfully");
+      } else {
+        toast.error("Failed to delete book");
+      }
       setDropDown(false);
     } catch (error) {
       console.log(error);
@@ -103,10 +119,17 @@ function ActionDialog({ book }) {
     try {
       const res = await borrowBook({ ...data, book: book._id });
       console.log(res);
-      setDropDown(false);
+      if (res.error) {
+        toast.error("Failed to borrow book");
+      } else {
+        toast.success("Succesfully borrowed");
+        navigate("/borrow-summary");
+      }
     } catch (error) {
       console.log(error);
     }
+    setDialog3(false);
+    setDropDown(false);
   };
 
   return (
@@ -157,11 +180,18 @@ function ActionDialog({ book }) {
             </AlertDialogContent>
           </AlertDialog>
 
-          <Dialog open={dialog3} onOpenChange={setDialog3}>
+          <Dialog
+            open={dialog3}
+            onOpenChange={() => {
+              setDialog3(!dialog3);
+              if (dialog3) setDropDown(false);
+            }}
+          >
             <DialogTrigger asChild>
               <DropdownMenuItem
                 onSelect={(e) => {
                   e.preventDefault();
+                  setDialog3(true);
                 }}
               >
                 Borrow Book

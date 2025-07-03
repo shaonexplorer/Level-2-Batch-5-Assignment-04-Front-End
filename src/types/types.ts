@@ -14,3 +14,8 @@ export type Books = {
   copies: number;
   available: boolean;
 };
+
+export type Summary = {
+  book: { title: string; ISBN: number };
+  TotalQuantity: number;
+};

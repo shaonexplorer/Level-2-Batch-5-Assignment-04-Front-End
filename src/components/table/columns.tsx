@@ -1,27 +1,7 @@
 import type { Books } from "@/types/types";
 import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "../ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
-import { Button } from "../ui/button";
-import { Link } from "react-router";
-import EditBook from "../books/editBook";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
-import { useState } from "react";
+
 import ActionDialog from "../actionDialog/action-dialog";
 
 export const columns: ColumnDef<Books>[] = [

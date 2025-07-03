@@ -1,5 +1,7 @@
+import SummaryTableRender from "../summery-table/summary-table-render";
+
 export function BorrowSummery() {
-  return <h1>this is summary page</h1>;
+  return <SummaryTableRender />;
 }
 
 export default BorrowSummery;
