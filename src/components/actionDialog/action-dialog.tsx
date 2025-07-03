@@ -59,28 +59,46 @@ import { format } from "date-fns";
 import { Calendar } from "../ui/calendar";
 import { useNavigate } from "react-router";
 import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { bookSchema, borrowSchema } from "@/zod/zod.schema";
 
 function ActionDialog({ book }) {
   const [dropDown, setDropDown] = useState(false);
   const [dialog1, setDialog1] = useState(false);
   const [dialog3, setDialog3] = useState(false);
-  const [foundBook, setFoundBook] = useState(null);
   const [openPop, setOpenPop] = useState(false);
 
-  const { data, isLoading } = useGetBookByIdQuery(book._id);
+  const { data: singleBook, isLoading } = useGetBookByIdQuery(book._id);
   const [updateBook, { isLoading: isCreating }] = useUpdateBookByIdMutation();
   const [deleteBook, { isLoading: isDeleting }] = useDeleteBookByIdMutation();
   const [borrowBook, { isLoading: isBorrowing }] = useBorrowBookByIdMutation();
 
   const navigate = useNavigate();
-  const form = useForm();
+  const borrowForm = useForm({ resolver: zodResolver(borrowSchema) });
+  const updateForm = useForm({
+    resolver: zodResolver(bookSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      author: "",
+      copies: "",
+      genre: "",
+      isbn: "",
+    },
+  });
 
   useEffect(() => {
-    if (data && !isLoading) {
-      setFoundBook(data.data);
-      form.reset(data);
+    if (singleBook && !isLoading) {
+      updateForm.reset({
+        title: singleBook.data.title,
+        author: singleBook.data.author,
+        description: singleBook.data.description,
+        copies: singleBook.data.copies,
+        genre: singleBook.data.genre,
+        isbn: singleBook.data.isbn,
+      });
     }
-  }, [data, isLoading, form]);
+  }, [singleBook, isLoading, updateForm]);
 
   const onSubmit = async (data) => {
     try {
@@ -95,7 +113,6 @@ function ActionDialog({ book }) {
       console.log(error);
     }
 
-    form.reset();
     setDialog1(false);
     setDropDown(false);
   };
@@ -205,13 +222,13 @@ function ActionDialog({ book }) {
                   your borrow information in the servers.
                 </DialogDescription>
               </DialogHeader>
-              <Form {...form}>
+              <Form {...borrowForm}>
                 <form
-                  onSubmit={form.handleSubmit(onBorrow)}
+                  onSubmit={borrowForm.handleSubmit(onBorrow)}
                   className="space-y-3"
                 >
                   <FormField
-                    control={form.control}
+                    control={borrowForm.control}
                     name="quantity"
                     defaultValue={1}
                     render={({ field }) => (
@@ -231,7 +248,7 @@ function ActionDialog({ book }) {
                   {/* date picker */}
 
                   <FormField
-                    control={form.control}
+                    control={borrowForm.control}
                     name="dueDate"
                     render={({ field }) => (
                       <FormItem className="flex flex-col">
@@ -301,12 +318,14 @@ function ActionDialog({ book }) {
             information in the servers.
           </DialogDescription>
         </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <Form {...updateForm}>
+          <form
+            onSubmit={updateForm.handleSubmit(onSubmit)}
+            className="space-y-3"
+          >
             <FormField
-              control={form.control}
+              control={updateForm.control}
               name="title"
-              defaultValue={foundBook?.title}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Title</FormLabel>
@@ -320,9 +339,8 @@ function ActionDialog({ book }) {
             />
 
             <FormField
-              control={form.control}
+              control={updateForm.control}
               name="author"
-              defaultValue={foundBook?.author}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Author</FormLabel>
@@ -338,9 +356,8 @@ function ActionDialog({ book }) {
             />
 
             <FormField
-              control={form.control}
+              control={updateForm.control}
               name="description"
-              defaultValue={foundBook?.description}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description</FormLabel>
@@ -356,9 +373,8 @@ function ActionDialog({ book }) {
             />
 
             <FormField
-              control={form.control}
+              control={updateForm.control}
               name="isbn"
-              defaultValue={foundBook?.isbn}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>ISBN Number</FormLabel>
@@ -374,9 +390,8 @@ function ActionDialog({ book }) {
             />
 
             <FormField
-              control={form.control}
+              control={updateForm.control}
               name="copies"
-              defaultValue={foundBook?.copies}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Number of Copies</FormLabel>
@@ -392,9 +407,8 @@ function ActionDialog({ book }) {
             />
 
             <FormField
-              control={form.control}
+              control={updateForm.control}
               name="genre"
-              defaultValue={foundBook?.genre}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Select a Genre</FormLabel>

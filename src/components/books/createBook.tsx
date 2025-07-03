@@ -30,12 +30,14 @@ import {
 import { useState } from "react";
 import { useCreateBookMutation } from "@/redux/api/book.api";
 import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { bookSchema } from "@/zod/zod.schema";
 
 function CreateBook() {
   const [isOpen, setIsOpen] = useState(false);
   const [createBook, { isLoading: isCreating }] = useCreateBookMutation();
 
-  const form = useForm();
+  const form = useForm({ resolver: zodResolver(bookSchema) });
 
   const onSubmit = async (data) => {
     try {
@@ -123,7 +125,6 @@ function CreateBook() {
             <FormField
               control={form.control}
               name="isbn"
-              defaultValue={""}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>ISBN Number</FormLabel>
@@ -141,12 +142,15 @@ function CreateBook() {
             <FormField
               control={form.control}
               name="copies"
-              defaultValue={""}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Number of Copies</FormLabel>
                   <FormControl>
-                    <Input placeholder="Number of copies" {...field} />
+                    <Input
+                      type="number"
+                      placeholder="Number of copies"
+                      {...field}
+                    />
                   </FormControl>
                   <FormDescription>
                     This is number of your book copies.
@@ -186,7 +190,9 @@ function CreateBook() {
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" onClick={() => form.reset()}>
+                  Cancel
+                </Button>
               </DialogClose>
               <Button type="submit" disabled={isCreating}>
                 Create Book
