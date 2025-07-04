@@ -5,6 +5,7 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
+  type PaginationState,
   useReactTable,
 } from "@tanstack/react-table";
 
@@ -31,6 +32,10 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+  const [pagination, setPagination] = useState<PaginationState>({
+    pageIndex: 0, // initial page index
+    pageSize: 10, // initial page size
+  });
 
   const table = useReactTable({
     data,
@@ -39,7 +44,9 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
-    state: { columnFilters },
+    state: { columnFilters, pagination },
+    onPaginationChange: setPagination,
+    autoResetPageIndex: false,
   });
 
   return (
