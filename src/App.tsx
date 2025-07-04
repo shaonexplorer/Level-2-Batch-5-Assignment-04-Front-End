@@ -8,7 +8,7 @@ import Footer from "./components/footer/footer";
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="w-screen h-[100dvh] px-5 sm:px-0 sm:w-[1300px] mx-auto flex flex-col">
+      <div className="w-screen h-[100dvh] overflow-y-auto px-5 sm:px-0 sm:w-[1300px] mx-auto flex flex-col">
         <div className="mt-5 flex items-center justify-between">
           <NavBar />
           <ModeToggle />
