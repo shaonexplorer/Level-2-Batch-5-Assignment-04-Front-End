@@ -67,7 +67,7 @@ function CreateBook() {
       <DialogTrigger asChild>
         <Button variant={"default"}>Add Book</Button>
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="max-h-[100dvh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Are you absolutely sure?</DialogTitle>
           <DialogDescription>
