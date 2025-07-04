@@ -39,7 +39,14 @@ function CreateBook() {
 
   const form = useForm({ resolver: zodResolver(bookSchema) });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: {
+    title: string;
+    author: string;
+    genre: string;
+    isbn: string;
+    description: string;
+    copies: number;
+  }) => {
     try {
       const res = await createBook({ ...data });
       console.log(res);

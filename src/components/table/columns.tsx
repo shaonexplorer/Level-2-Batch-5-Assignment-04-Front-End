@@ -49,9 +49,9 @@ export const columns: ColumnDef<Books>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const book = row.original;
+      const currentBook = row.original;
 
-      return <ActionDialog book={book} />;
+      return <ActionDialog book={currentBook} />;
     },
   },
 ];

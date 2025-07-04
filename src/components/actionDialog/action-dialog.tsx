@@ -61,8 +61,9 @@ import { useNavigate } from "react-router";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { bookSchema, borrowSchema } from "@/zod/zod.schema";
+import type { Books } from "@/types/types";
 
-function ActionDialog({ book }) {
+function ActionDialog({ book }: { book: Books }) {
   const [dropDown, setDropDown] = useState(false);
   const [dialog1, setDialog1] = useState(false);
   const [dialog3, setDialog3] = useState(false);
@@ -81,7 +82,7 @@ function ActionDialog({ book }) {
       title: "",
       description: "",
       author: "",
-      copies: "",
+      copies: undefined,
       genre: "",
       isbn: "",
     },
@@ -100,7 +101,14 @@ function ActionDialog({ book }) {
     }
   }, [singleBook, isLoading, updateForm]);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: {
+    title: string;
+    author: string;
+    genre: string;
+    isbn: string;
+    description: string;
+    copies: number;
+  }) => {
     try {
       const res = await updateBook({ id: book._id, ...data });
       console.log(res);
@@ -132,7 +140,7 @@ function ActionDialog({ book }) {
     }
   };
 
-  const onBorrow = async (data) => {
+  const onBorrow = async (data: { quantity: number; dueDate: Date }) => {
     try {
       const res = await borrowBook({ ...data, book: book._id });
       console.log(res);

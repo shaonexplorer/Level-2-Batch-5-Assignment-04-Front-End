@@ -8,7 +8,7 @@ export const bookSchema = z.object({
   description: z.string().min(1, { message: "Description is required" }),
   author: z.string().min(1, { message: "Author is required" }),
   genre: z.string().min(1, { message: "Genre is required" }),
-  isbn: z.coerce.number(),
+  isbn: z.string(),
   copies: z.coerce.number().positive(),
 });
 
