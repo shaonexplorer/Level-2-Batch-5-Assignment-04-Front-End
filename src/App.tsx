@@ -8,7 +8,7 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="w-[1300px] mx-auto">
-        <div className="fex items-center justify-between">
+        <div className="mt-5 flex items-center justify-between">
           <NavBar />
           <ModeToggle />
         </div>
