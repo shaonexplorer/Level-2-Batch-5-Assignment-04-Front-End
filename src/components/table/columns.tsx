@@ -33,7 +33,7 @@ export const columns: ColumnDef<Books>[] = [
       if (value) {
         return (
           <div className="flex justify-center items-center">
-            <Badge variant={"default"} className="bg-green-500">
+            <Badge variant={"default"} className="bg-green-700">
               Available
             </Badge>
           </div>

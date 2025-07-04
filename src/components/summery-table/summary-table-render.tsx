@@ -6,7 +6,7 @@ export default function SummaryTableRender() {
   const { data, isLoading } = useGetBorrowQuery(undefined);
 
   return (
-    <div className="w-[680px] container mx-auto py-10">
+    <div className="w-full sm:w-[680px] container mx-auto py-10">
       {!isLoading && data && (
         <SummaryTable columns={summary_columns} data={data.data} />
       )}
