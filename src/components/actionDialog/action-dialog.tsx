@@ -68,6 +68,7 @@ function ActionDialog({ book }: { book: Books }) {
   const [dialog1, setDialog1] = useState(false);
   const [dialog3, setDialog3] = useState(false);
   const [openPop, setOpenPop] = useState(false);
+  const [alert, setAlert] = useState(false);
 
   const { data: singleBook, isLoading } = useGetBookByIdQuery(book._id);
   const [updateBook, { isLoading: isCreating }] = useUpdateBookByIdMutation();
@@ -134,10 +135,11 @@ function ActionDialog({ book }: { book: Books }) {
       } else {
         toast.error("Failed to delete book");
       }
-      setDropDown(false);
     } catch (error) {
       console.log(error);
     }
+    setAlert(false);
+    setDropDown(false);
   };
 
   const onBorrow = async (data: { quantity: number; dueDate: Date }) => {
@@ -180,7 +182,7 @@ function ActionDialog({ book }: { book: Books }) {
 
           <DropdownMenuSeparator />
 
-          <AlertDialog>
+          <AlertDialog open={alert} onOpenChange={setAlert}>
             <AlertDialogTrigger>
               <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                 Delete Book
@@ -198,7 +200,13 @@ function ActionDialog({ book }: { book: Books }) {
                 <AlertDialogCancel onClick={() => setDropDown(false)}>
                   Cancel
                 </AlertDialogCancel>
-                <AlertDialogAction onClick={handleDelete} disabled={isDeleting}>
+                <AlertDialogAction
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleDelete();
+                  }}
+                  disabled={isDeleting}
+                >
                   Delete Book
                 </AlertDialogAction>
               </AlertDialogFooter>
