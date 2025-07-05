@@ -32,8 +32,14 @@ import { useCreateBookMutation } from "@/redux/api/book.api";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { bookSchema } from "@/zod/zod.schema";
+import type { Table } from "@tanstack/react-table";
+import type { Books } from "@/types/types";
 
-function CreateBook() {
+// interface CreateBookProps<TData extends Books> {
+//   table: Table<TData>;
+// }
+
+function CreateBook({ table }: { table: Table<Books> }) {
   const [isOpen, setIsOpen] = useState(false);
   const [createBook, { isLoading: isCreating }] = useCreateBookMutation();
 
@@ -59,6 +65,7 @@ function CreateBook() {
       console.log(error);
     }
 
+    table.resetPageIndex();
     setIsOpen(false);
     form.reset();
   };

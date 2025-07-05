@@ -21,23 +21,26 @@ import CreateBook from "../books/createBook";
 import { Button } from "../ui/button";
 import { useState } from "react";
 import { Input } from "../ui/input";
+import type { Books } from "@/types/types";
 
-interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[];
-  data: TData[];
+// interface DataTableProps<TData, TValue> {
+//   columns: ColumnDef<TData, TValue>[];
+//   data: TData[];
+// }
+
+interface DataTableProps {
+  columns: ColumnDef<Books>[]; // <-- we expect this prop
+  data: Books[]; // <-- and this prop
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+export function DataTable({ data, columns }: DataTableProps) {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0, // initial page index
-    pageSize: 10, // initial page size
+    pageSize: 8, // initial page size
   });
 
-  const table = useReactTable({
+  const table = useReactTable<Books>({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
@@ -61,7 +64,7 @@ export function DataTable<TData, TValue>({
           className="max-w-sm"
         />
         <div className="ml-auto">
-          <CreateBook />
+          <CreateBook table={table} />
         </div>
       </div>
       {/* table main body section */}
