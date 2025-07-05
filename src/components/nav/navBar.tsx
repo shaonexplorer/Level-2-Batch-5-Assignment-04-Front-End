@@ -7,9 +7,15 @@ import {
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu";
 
+import idea from "../../assets/school.svg";
+
 export function NavBar() {
   return (
-    <>
+    <div className="flex items-center gap-5">
+      <Link to={"/"}>
+        <img src={idea} width={45} className="ml-3 hidden sm:flex"></img>
+      </Link>
+
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
@@ -21,15 +27,6 @@ export function NavBar() {
             </NavigationMenuLink>
           </NavigationMenuItem>
 
-          {/* <NavigationMenuItem>
-            <NavigationMenuLink
-              asChild
-              className={navigationMenuTriggerStyle()}
-            >
-              <Link to={"/create-book"}>Add Book</Link>
-            </NavigationMenuLink>
-          </NavigationMenuItem> */}
-
           <NavigationMenuItem>
             <NavigationMenuLink
               asChild
@@ -40,7 +37,7 @@ export function NavBar() {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-    </>
+    </div>
   );
 }
 
