@@ -72,4 +72,4 @@ It leverages React Router for navigation and shadcn/ui for styling.
 
 Project maintained by Abir Hasan – shaonexplorer@gmail.com
 
-GitHub: https://github.com/shaonexplorer
+GitHub:[shaonexplorer](https://github.com/shaonexplorer)
