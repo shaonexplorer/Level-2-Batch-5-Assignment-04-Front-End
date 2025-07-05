@@ -1,69 +1,75 @@
-# React + TypeScript + Vite
+# Library Management App - Assignment 04 - Batch-05
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A starter Vite + React + TypeScript project using shadcn/ui, React Router, and modern frontend best practices.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Overview
 
-## Expanding the ESLint configuration
+This project is a client-side library management application.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Users can browse, add, edit, and remove books.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+It leverages React Router for navigation and shadcn/ui for styling.
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Features
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Book listing with search and filters
+- Add, edit, and delete book entries
+- Client-side form validation in TypeScript
+- Responsive design powered by shadcn/ui
+- Nested routes with React Router v7
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Tech Stack
+
+| Layer            | Technology           |
+| ---------------- | -------------------- |
+| Project Setup    | Vite                 |
+| UI Library       | React                |
+| Language         | TypeScript           |
+| Styling & UI     | shadcn/ui (Tailwind) |
+| Routing          | React Router v7      |
+| State Management | Redux/RTK Query      |
+
+---
+
+## Installation
+
+1. Clone the repo
+   ```bash
+   git clone https://github.com/shaonexplorer/Level-2-Batch-5-Assignment-04-Front-End.git
+   cd your project folder
+   ```
+2. **Install dependencies:**
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Set up environment variables:**
+   Create a `.env` file in the root directory of the project and add the following:
+
+   ```
+   VITE_BASE_URL="https://level-2-batch-5-assignment-03.vercel.app/api/"
+   ```
+
+4. **Start the development server:**
+   ```bash
+   npm run dev
+   # or
+   yarn run dev
+   ```
+
+---
+
+## Contact
+
+Project maintained by Abir Hasan – shaonexplorer@gmail.com
+
+GitHub: https://github.com/shaonexplorer
