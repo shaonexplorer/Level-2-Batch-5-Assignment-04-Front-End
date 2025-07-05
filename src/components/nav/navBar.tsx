@@ -11,9 +11,9 @@ import idea from "../../assets/school.svg";
 
 export function NavBar() {
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center sm:gap-5">
       <Link to={"/"}>
-        <img src={idea} width={45} className="ml-3 hidden sm:flex"></img>
+        <img src={idea} width={45} className="sm:ml-3 hidden sm:flex"></img>
       </Link>
 
       <NavigationMenu>
